@@ -49,13 +49,13 @@ std::string Str2hex(std::string ctx)
 	result << "static const unsigned char buf[]={" << std::endl;
 	for (size_t i = 0; i < ctx.length(); i++)
 	{
-		char sub[100];
-		sprintf_s(sub, " 0x%0x,", (unsigned char)ctx[i]);
-		result << sub;
 		if (i != 0 && i % 20 == 0)
 		{
 			result << "\n";
 		}
+		char sub[100];
+		sprintf_s(sub, " 0x%02x,", (unsigned char)ctx[i]);
+		result << sub;
 	}
 	result << "};";
 	return result.str();
