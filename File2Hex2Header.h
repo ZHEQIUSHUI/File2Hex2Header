@@ -93,7 +93,7 @@ std::string Str2hex(std::string ctx, std::string _name)
 		{
 			result << "\n";
 		}
-		char sub[50];
+		char sub[7];
 		sprintf_s(sub, " 0x%02x,", (unsigned char)ctx[i]);
 		result << sub;
 	}
