@@ -17,7 +17,7 @@ int main()
 #include "generated header filename"
 int main()
 {
-  std::string ctx(buf, buf + _countof(buf));
+  std::string ctx(buf, buf + countof(buf));
   writefile(ctx, "filename for output");
   return 0;
 }
