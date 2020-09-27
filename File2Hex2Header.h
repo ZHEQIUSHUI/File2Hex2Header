@@ -80,13 +80,13 @@ void writefile(std::string ctx, std::string filename)
 std::string Str2hex(std::string ctx, std::string _name)
 {
 	std::stringstream result;
-	result << "#ifdef _MSC_VER" << std::endl;
-	result << "__declspec(align(4))" << std::endl;
-	result << "#else" << std::endl;
-	result << "__attribute__((aligned(4)))" << std::endl;
-	result << "#endif" << std::endl;
-	result << "//constexpr int bufsize = " << ctx.size() << ";" << std::endl;
-	result << "static const unsigned char " << _name << "[] = {" << std::endl;
+	result << "#ifdef _MSC_VER" << "\n";
+	result << "__declspec(align(4))" << "\n";
+	result << "#else" << "\n";
+	result << "__attribute__((aligned(4)))" << "\n";
+	result << "#endif" << "\n";
+	result << "//constexpr int bufsize = " << ctx.size() << ";" << "\n";
+	result << "static const unsigned char " << _name << "[] = {" << "\n";
 	for (size_t i = 0; i < ctx.length(); i++)
 	{
 		if (i != 0 && i % 20 == 0)
@@ -111,8 +111,8 @@ void File2Header(std::string filename,std::string headerfile)
 
 	if (out.is_open())
 	{
-		out << "#pragma once" << std::endl << std::endl;
-		out << hex << std::endl;
+		out << "#pragma once" << "\n" << "\n";
+		out << hex << "\n";
 	}
 	out.close();
 }
