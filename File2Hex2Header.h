@@ -77,7 +77,7 @@ void writefile(std::string ctx, std::string filename)
 	out.close();
 }
 
-std::string Str2hex(std::string ctx,std::string _name)
+std::string Str2hex(std::string ctx, std::string _name)
 {
 	std::stringstream result;
 	result << "#ifdef _MSC_VER" << std::endl;
@@ -86,14 +86,14 @@ std::string Str2hex(std::string ctx,std::string _name)
 	result << "__attribute__((aligned(4)))" << std::endl;
 	result << "#endif" << std::endl;
 	result << "//constexpr int bufsize = " << ctx.size() << ";" << std::endl;
-	result << "static const unsigned char "<< _name <<"[] = {" << std::endl;
+	result << "static const unsigned char " << _name << "[] = {" << std::endl;
 	for (size_t i = 0; i < ctx.length(); i++)
 	{
 		if (i != 0 && i % 20 == 0)
 		{
 			result << "\n";
 		}
-		char sub[100];
+		char sub[50];
 		sprintf_s(sub, " 0x%02x,", (unsigned char)ctx[i]);
 		result << sub;
 	}
