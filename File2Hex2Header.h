@@ -29,7 +29,6 @@ void GetPathOrURLShortName(std::string strFullName, std::string& filename, std::
 	{
 		return;
 	}
-
 	string_replace(strFullName, "/", "\\");
 	//1.获取不带路径的文件名
 	std::string::size_type iPos = strFullName.find_last_of('\\') + 1;
@@ -44,9 +43,9 @@ void GetPathOrURLShortName(std::string strFullName, std::string& filename, std::
 }
 
 
-std::string readfile(std::string filename)
+std::string readfile(std::string fullname)
 {
-	std::fstream in(filename.c_str(), std::ios::in | std::ios::binary);
+	std::fstream in(fullname.c_str(), std::ios::in | std::ios::binary);
 	std::stringstream ctx;
 	if (in.is_open())
 	{
@@ -57,19 +56,19 @@ std::string readfile(std::string filename)
 	in.close();
 	return ctx.str();
 }
-void writefile(char* ctx, int len, std::string filename)
+void writefile(char* ctx, int len, std::string fullname)
 {
 	FILE* file = nullptr;
-	fopen_s(&file, filename.c_str(), "w");
+	fopen_s(&file, fullname.c_str(), "w");
 	if (file)
 	{
 		fwrite(ctx, 1, len, file);
 		fclose(file);
 	}
 }
-void writefile(std::string ctx, std::string filename)
+void writefile(std::string ctx, std::string fullname)
 {
-	std::fstream out(filename.c_str(), std::ios::out | std::ios::binary);
+	std::fstream out(fullname.c_str(), std::ios::out | std::ios::binary);
 	if (out.is_open())
 	{
 		out << ctx;
@@ -87,6 +86,7 @@ std::string Str2hex(std::string ctx, std::string _name)
 	result << "#endif" << "\n";
 	result << "//constexpr int bufsize = " << ctx.size() << ";" << "\n";
 	result << "static const unsigned char " << _name << "[] = {" << "\n";
+	unsigned char* data = (unsigned char*)ctx.data();
 	for (size_t i = 0; i < ctx.length(); i++)
 	{
 		if (i != 0 && i % 20 == 0)
@@ -94,18 +94,18 @@ std::string Str2hex(std::string ctx, std::string _name)
 			result << "\n";
 		}
 		char sub[7];
-		sprintf_s(sub, " 0x%02x,", (unsigned char)ctx[i]);
+		sprintf_s(sub, " 0x%02x,", data[i]);
 		result << sub;
 	}
 	result << "};";
 	return result.str();
 }
 
-void File2Header(std::string filename,std::string headerfile)
+void File2Header(std::string fullname,std::string headerfile)
 {
 	std::string _filename, _name, _suffix_str;
-	GetPathOrURLShortName(filename, _filename, _name, _suffix_str);
-	auto ctx = readfile(filename);
+	GetPathOrURLShortName(fullname, _filename, _name, _suffix_str);
+	auto ctx = readfile(fullname);
 	auto hex = Str2hex(ctx, _name);
 	std::fstream out(headerfile.c_str(), std::ios::out | std::ios::binary);
 
