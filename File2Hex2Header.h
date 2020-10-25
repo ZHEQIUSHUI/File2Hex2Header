@@ -97,7 +97,7 @@ std::string Str2hex(std::string ctx, std::string _name)
 		sprintf_s(sub, " 0x%02x,", data[i]);
 		result << sub;
 	}
-	result << "};";
+	result << " 0x0};";
 	return result.str();
 }
 
